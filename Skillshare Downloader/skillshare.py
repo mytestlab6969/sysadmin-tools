@@ -87,28 +87,28 @@ class Skillshare(object):
         
         for x in meta_res.json()['sources']:
             print(x)
-        #     if x['container'] == 'MP4' and 'src' in x:
-        #         dl_url = x['src']
-        #         break
+            if 'container' in x.keys() and 'src' in x.keys() and x['container'] == 'MP4':
+                dl_url = x['src']
+                break
 
-        # print('Downloading {}...'.format(fpath))
-        # if os.path.exists(fpath):
-        #     print('Video already downloaded, skipping...')
-        #     return
-        # with open(fpath, 'wb') as f:
-        #     response = requests.get(dl_url, allow_redirects=True, stream=True)
-        #     total_length = response.headers.get('content-length')
-        #     if not total_length:
-        #         f.write(response.content)
-        #     else:
-        #         dl = 0
-        #         total_length = int(total_length)
-        #         for data in response.iter_content(chunk_size=4096):
-        #             dl += len(data)
-        #             f.write(data)
-        #             done = int(50 * dl / total_length)
-        #             sys.stdout.write('\r[%s%s]' % ('=' * done, ' ' * (50 - done)))
-        #             sys.stdout.flush()
+        print('Downloading {}...'.format(fpath))
+        if os.path.exists(fpath):
+            print('Video already downloaded, skipping...')
+            return
+        with open(fpath, 'wb') as f:
+            response = requests.get(dl_url, allow_redirects=True, stream=True)
+            total_length = response.headers.get('content-length')
+            if not total_length:
+                f.write(response.content)
+            else:
+                dl = 0
+                total_length = int(total_length)
+                for data in response.iter_content(chunk_size=4096):
+                    dl += len(data)
+                    f.write(data)
+                    done = int(50 * dl / total_length)
+                    sys.stdout.write('\r[%s%s]' % ('=' * done, ' ' * (50 - done)))
+                    sys.stdout.flush()
 
-        #     print('')
+            print('')
 # okay decompiling skillshare.pyc
